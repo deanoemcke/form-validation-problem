@@ -36,13 +36,15 @@ If the form is submitted and an error occurs, the error element's parent should 
 
 ## Improvements
 Useability-wise there's a few enhancements I would make given more time:
-* Adding inline validation messages to explain validation errors
 * Removing error class as soon as input becomes valid (vs onblur)
 * Style/disable submit button when errors are detected
+
+## Known bugs
+* Tabbing through the animals without selecting one (or just selecting one) will not trigger a validation warning until submit button is pressed.
 
 ## Considerations
 * I have implemented in typescript (strict mode). Using typescript for this project was possibly overkill, but even for small projects I appreciate the strictness it enforces in my coding style.
 * I have done little in terms of documentation besides some inline commenting.
-* Accessibility could be improved by implementing aforementioned inline validation errors. Perhaps HTML5 form validation could have been used?
+* Accessibility: Form is usable via keyboard only. Inline validation messages have the `aria-invalid` attribute for screen readers.
 * I am target ES5 for broad browser support. 
 * My tooling is fairly minimal. VScode with prettier and typescript transpiling. Debugging via chrome dev tools and VScode debugger for chrome (for debugging the raw ts files).
