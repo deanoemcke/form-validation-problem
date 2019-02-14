@@ -34,19 +34,15 @@ If the form is submitted and an error occurs, the error element's parent should 
 </p>
 ```
 
-Please write a little bit about the technology you chose and why, including any limitations or possibilities of this approach.
+## Improvements
+Useability-wise there's a few enhancements I would make given more time:
+* Adding inline validation messages to explain validation errors
+* Removing error class as soon as input becomes valid (vs onblur)
+* Style/disable submit button when errors are detected
 
-## The cherry on the cake
-
-Beyond the problem statement, show us the consideration you have given to some or all of the following:
-
-- Documentation
-- Accessibility
-- Progressive enhancement
-- Browser support
-- Testing
-- Tooling
-
-## Submission
-
-Please email us a link to your fork of this repository, or a zip of your solution to `1337h4x0r@springload.co.nz`.
+## Considerations
+* I have implemented in typescript (strict mode). Using typescript for this project was possibly overkill, but even for small projects I appreciate the strictness it enforces in my coding style.
+* I have done little in terms of documentation besides some inline commenting.
+* Accessibility could be improved by implementing aforementioned inline validation errors. Perhaps HTML5 form validation could have been used?
+* I am target ES5 for broad browser support. 
+* My tooling is fairly minimal. VScode with prettier and typescript transpiling. Debugging via chrome dev tools and VScode debugger for chrome (for debugging the raw ts files).
