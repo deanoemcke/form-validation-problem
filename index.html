@@ -120,29 +120,19 @@
         }
 
         .label {
-            width: 10em;
             display: inline-block;
+            width: 10em;
         }
 
-        /*
-            -------------------------------------------------------------------
-            Error states
-            -------------------------------------------------------------------
+        input[aria-invalid], 
+        span[aria-invalid],
+        select[aria-invalid] { border: solid 1px red; }
 
-            An error class to forms that fail your validation:
-
-            <p class='error'>
-                <label for='field'></label>
-                <input id='field' type='text' value='foo'>
-            </p>
-        */
-        .error > input,
-        .error > label {
+        .validationError {
+            font-weight: normal;
             color: red;
-        }
-
-        .error > input {
-            border-color: red;
+            padding-left: 20px; 
+            display: none;
         }
 
     </style>
@@ -154,65 +144,70 @@
         <fieldset>
             <h3>Your details</h3>
             <p>
-                <label class='label' for='email'>
-                    Email
+                <label>
+                    <span class='label'>Email</span>
+                    <input type='text' id='email' name='email'>
+                    <strong class='validationError'>You must provide a valid email address</strong>
                 </label>
-                <input type='text' id='email' name='email'>
             </p>
             <p>
-                <label class='label' for='password'>
-                    Password
+                <label>
+                    <span class='label'>Password</span>
+                    <input type='password' id='password' name='username'>
+                    <strong class='validationError'>Your password must be longer than 8 characters</strong>
                 </label>
-                <input type='password' id='password' name='username'>
             </p>
         </fieldset>
-
+        
         <fieldset>
             <h3>Your animal</h3>
             <p>
-                <label class='label' for='colour'>
-                    Colour
+                <label>
+                    <span class='label'>Colour</span>
+                    <select name='colour' id='colour'>
+                        <option value=''>Choose colour</option>
+                        <option value='blue'>Blue</option>
+                        <option value='green'>Green</option>
+                        <option value='red'>Red</option>
+                        <option value='black'>Black</option>
+                        <option value='brown'>Brown</option>
+                    </select>
+                    <strong class='validationError'>You must select a colour</strong>
                 </label>
-                <select name='colour' id='colour'>
-                    <option value=''>Choose colour</option>
-                    <option value='blue'>Blue</option>
-                    <option value='green'>Green</option>
-                    <option value='red'>Red</option>
-                    <option value='black'>Black</option>
-                    <option value='brown'>Brown</option>
-                </select>
             </p>
             <p>
-                <span class="label">
-                    Animal
-                </span>
-
-                <input type='checkbox' name='animal' value='bear' id='bear'>
-                <label for='bear'>
-                     Bear
+                <label>
+                    <span class='label'>Animal</span>
+                    <span id="animals_group">
+                        <label>
+                            <input type='checkbox' name='animal' value='bear' id='bear'>
+                            Bear
+                        </label>
+                        
+                        <label>
+                            <input type='checkbox' name='animal' value='tiger' id='tiger'>
+                            Tiger
+                        </label>
+                        
+                        <label>
+                            <input type='checkbox' name='animal' value='snake' id='snake'>
+                            Snake
+                        </label>
+                        
+                        <label>
+                            <input type='checkbox' name='animal' value='donkey' id='donkey'>
+                            Donkey
+                        </label>
+                    </span>
+                    <strong class='validationError'>You must select at least 2 animals</strong>
                 </label>
-
-                <input type='checkbox' name='animal' value='tiger' id='tiger'>
-                <label for='tiger'>
-                    Tiger
-                </label>
-
-                <input type='checkbox' name='animal' value='snake' id='snake'>
-                <label for='snake'>
-                     Snake
-                </label>
-
-                <input type='checkbox' name='animal' value='donkey' id='donkey'>
-                <label for='donkey'>
-                     Donkey
-                </label>
-
             </p>
             <p>
-                <label class='label' for='tiger_type'>
-                    Type of tiger
+                <label>
+                    <span class='label'>Type of tiger</span>
+                    <input type='text' name='tiger_type' id='tiger_type'>
+                    <strong class='validationError'>If tiger is selected, you must specify a tiger type</strong>
                 </label>
-                <input type='text' name='tiger_type' id='tiger_type'>
             </p>
         </fieldset>
         <fieldset>

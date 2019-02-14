@@ -8,10 +8,11 @@ var emailSelector = '#email';
 var passwordSelector = '#password';
 var colourSelector = '#colour';
 var animalsSelector = "input[name='animal']";
+var animalsGroupSelector = '#animals_group';
 var tigerSelector = '#tiger';
 var tigerTypeSelector = '#tiger_type';
 var submitSelector = "input[type='submit']";
-var errorSelector = '.error';
+var errorSelector = "[aria-invalid='true']";
 function addValidationHandlers() {
     // `Email` must be a valid email address.
     var emailEl = document.querySelector(emailSelector);
@@ -71,14 +72,14 @@ function validateFormElWithRegex(formEl, testRegex) {
 }
 function validateAnimalElements(minimumCheckedCount, isCheckEvent) {
     var animalEls = document.querySelectorAll(animalsSelector);
-    var firstAnimalEl = animalEls[0];
     var checkedAnimalEls = Array.prototype.filter.call(animalEls, function (el) { return el.checked; });
-    var wasValid = isElementCurrentlyValid(firstAnimalEl);
+    var animalsGroupEl = (document.querySelector(animalsGroupSelector));
+    var wasValid = isElementCurrentlyValid(animalsGroupEl);
     // Checking first animal should NOT be considered invalid, unless we are
     // already in an invalid state
     var isValid = checkedAnimalEls.length >= minimumCheckedCount ||
         (wasValid && isCheckEvent);
-    applyValidationStateToElement(firstAnimalEl, isValid);
+    applyValidationStateToElement(animalsGroupEl, isValid);
 }
 function validateTigerNameElement() {
     var tigerEl = document.querySelector(tigerSelector);
@@ -87,21 +88,18 @@ function validateTigerNameElement() {
     applyValidationStateToElement(tigerTypeEl, isValid);
 }
 function applyValidationStateToElement(el, isValid) {
-    var parentEl = el.parentElement;
-    if (!parentEl || parentEl.tagName !== 'P')
-        return;
+    var validationMsgEl = el.parentElement.lastElementChild;
     if (!isValid) {
-        parentEl.classList.add('error');
+        el.setAttribute('aria-invalid', 'true');
+        validationMsgEl.style.display = 'inline-block';
     }
     else {
-        parentEl.classList.remove('error');
+        el.removeAttribute('aria-invalid');
+        validationMsgEl.style.display = 'none';
     }
 }
 function isElementCurrentlyValid(el) {
-    var parentEl = el.parentElement;
-    if (!parentEl)
-        return true;
-    return !parentEl.classList.contains('error');
+    return !el.hasAttribute('aria-invalid');
 }
 function isFormCurrentlyValid() {
     var firstErrorEl = document.querySelector(errorSelector);

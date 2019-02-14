@@ -1,14 +1,12 @@
 {
     "compilerOptions": {
-        "outDir": "./",
         "module": "commonjs",
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "sourceMap": true,
         "strict": true,
+        "watch": true,
         "target": "es5"
     },
-    "compileOnSave": true,
-    "include": ["**/*.ts"],
-    "exclude": ["**/*.js"]
+    "include": ["**/*.ts"]
 }

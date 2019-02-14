@@ -10,10 +10,11 @@ const emailSelector = '#email';
 const passwordSelector = '#password';
 const colourSelector = '#colour';
 const animalsSelector = "input[name='animal']";
+const animalsGroupSelector = '#animals_group';
 const tigerSelector = '#tiger';
 const tigerTypeSelector = '#tiger_type';
 const submitSelector = "input[type='submit']";
-const errorSelector = '.error';
+const errorSelector = "[aria-invalid='true']";
 
 function addValidationHandlers() {
     // `Email` must be a valid email address.
@@ -93,19 +94,21 @@ function validateAnimalElements(
     isCheckEvent: boolean,
 ) {
     const animalEls = document.querySelectorAll(animalsSelector);
-    const firstAnimalEl = <HTMLElement>animalEls[0];
     const checkedAnimalEls = Array.prototype.filter.call(
         animalEls,
         (el: HTMLFormElement) => el.checked,
     );
-    let wasValid = isElementCurrentlyValid(firstAnimalEl);
+    const animalsGroupEl = <HTMLFormElement>(
+        document.querySelector(animalsGroupSelector)
+    );
+    const wasValid = isElementCurrentlyValid(animalsGroupEl);
 
     // Checking first animal should NOT be considered invalid, unless we are
     // already in an invalid state
     const isValid =
         checkedAnimalEls.length >= minimumCheckedCount ||
         (wasValid && isCheckEvent);
-    applyValidationStateToElement(firstAnimalEl, isValid);
+    applyValidationStateToElement(animalsGroupEl, isValid);
 }
 
 function validateTigerNameElement() {
@@ -118,19 +121,18 @@ function validateTigerNameElement() {
 }
 
 function applyValidationStateToElement(el: HTMLElement, isValid: boolean) {
-    const parentEl = el.parentElement;
-    if (!parentEl || parentEl.tagName !== 'P') return;
+    const validationMsgEl = <HTMLElement>el.parentElement!.lastElementChild;
     if (!isValid) {
-        parentEl.classList.add('error');
+        el.setAttribute('aria-invalid', 'true');
+        validationMsgEl.style.display = 'inline-block';
     } else {
-        parentEl.classList.remove('error');
+        el.removeAttribute('aria-invalid');
+        validationMsgEl.style.display = 'none';
     }
 }
 
 function isElementCurrentlyValid(el: HTMLElement): boolean {
-    const parentEl = el.parentElement;
-    if (!parentEl) return true;
-    return !parentEl.classList.contains('error');
+    return !el.hasAttribute('aria-invalid');
 }
 
 function isFormCurrentlyValid(): boolean {
